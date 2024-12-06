@@ -1,0 +1,463 @@
+\documentclass[10pt, letterpaper]{article}
+
+% Packages:
+\usepackage[
+    ignoreheadfoot, % set margins without considering header and footer
+    top=1.5 cm, % seperation between body and page edge from the top
+    bottom=1.5 cm, % seperation between body and page edge from the bottom
+    left=1 cm, % seperation between body and page edge from the left
+    right=1 cm, % seperation between body and page edge from the right
+    footskip=1.0 cm, % seperation between body and footer
+    % showframe % for debugging 
+]{geometry} % for adjusting page geometry
+\usepackage[explicit]{titlesec} % for customizing section titles
+\usepackage{tabularx} % for making tables with fixed width columns
+\usepackage{array} % tabularx requires this
+\usepackage[dvipsnames]{xcolor} % for coloring text
+\definecolor{primaryColor}{RGB}{0, 79, 144} % define primary color
+\usepackage{enumitem} % for customizing lists
+\usepackage{fontawesome5} % for using icons
+\usepackage{amsmath} % for math
+\usepackage[
+    pdftitle={Hasnain's CV},
+    pdfauthor={Hasnain},
+    pdfcreator={LaTeX},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref} % for links, metadata and bookmarks
+\usepackage[pscoord]{eso-pic} % for floating text on the page
+\usepackage{calc} % for calculating lengths
+\usepackage{bookmark} % for bookmarks
+\usepackage{lastpage} % for getting the total number of pages
+\usepackage{changepage} % for one column entries (adjustwidth environment)
+\usepackage{paracol} % for two and three column entries
+\usepackage{ifthen} % for conditional statements
+\usepackage{needspace} % for avoiding page brake right after the section title
+\usepackage{iftex} % check if engine is pdflatex, xetex or luatex
+
+% Ensure that generate pdf is machine readable/ATS parsable:
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+\usepackage[default, type1]{sourcesanspro} 
+
+% Some settings:
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove space before adjustwidth environment
+\pagestyle{empty} % no header or footer
+\setcounter{secnumdepth}{0} % no section numbering
+\setlength{\parindent}{0pt} % no indentation
+\setlength{\topskip}{0pt} % no top skip
+\setlength{\columnsep}{0.15cm} % set column seperation
+\makeatletter
+\let\ps@customFooterStyle\ps@plain % Copy the plain style to customFooterStyle
+\makeatother
+% \pagestyle{customFooterStyle}
+
+\titleformat{\section}{
+    % avoid page braking right after the section title
+    \needspace{0\baselineskip}
+    % make the font size of the section title large and color it with the primary color
+    \Large\color{black}
+}{
+}{
+}{
+    % print bold title, give 0.15 cm space and draw a line of 0.8 pt thickness
+    % from the end of the title to the end of the body
+    \textbf{#1}\hspace{0.15cm}\titlerule[0.5pt]\hspace{0.078cm}
+}[] % section title formatting
+
+\titlespacing{\section}{
+    % left space:
+    0.0 cm
+}{
+    % top space:
+    0.3 cm
+}{
+    % bottom space:
+    0.2 cm
+} % section title spacing
+
+% \renewcommand\labelitemi{$\vcenter{\hbox{\small$\bullet$}}$} % custom bullet points
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0.4 cm + 10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights for bullet entries
+
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{
+        0.2 cm + 0.00001 cm
+    }{
+        0.2 cm + 0.00001 cm
+    }
+}{
+    \end{adjustwidth}
+} % new environment for one column entries
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 4.5 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for two column entries
+
+\newenvironment{threecolentry}[3][]{
+    \onecolentry
+    \def\thirdColumn{#3}
+    \setcolumnwidth{1 cm, \fill, 4.5 cm}
+    \begin{paracol}{3}
+    {\raggedright #2} \switchcolumn
+}{
+    \switchcolumn \raggedleft \thirdColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for three column entries
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\color{black}\linespread{1.5}
+}{
+    \par\kern\topsep
+} % new environment for the header
+
+
+% save the original href command in a new command:
+\let\hrefWithoutArrow\href
+
+% new command for external links:
+\renewcommand{\href}[2]{\hrefWithoutArrow{#1}{\ifthenelse{\equal{#2}{}}{ }{#2 }\raisebox{.15ex}{\footnotesize \faExternalLink*}}}
+
+
+\begin{document}
+    \newcommand{\AND}{\unskip
+        \cleaders\copy\ANDbox\hskip\wd\ANDbox
+        \ignorespaces
+    }
+    \newsavebox\ANDbox
+    \sbox\ANDbox{}
+
+    \placelastupdatedtext
+    \begin{header}
+        \fontsize{30 pt}{30 pt}
+        \textbf{Hasnain Ahmed}
+
+        \vspace{0.1 cm}
+
+        \normalsize
+        \mbox{\hrefWithoutArrow{tel: +923343529901}{{}\hspace*{0.0cm}+92 (334) 3529901}}%
+        \kern 0.25 cm%
+        \AND%
+        \mbox{\hrefWithoutArrow{mailto:hassu20083@gmail.com}{{\textbar\ }\hspace*{0.25cm}hassu20083@gmail.com}}%
+        \kern 0.25 cm%
+        \AND%
+        \mbox{\hrefWithoutArrow{https://linkedin.com/in/hasnain83}{{\textbar\ }\hspace*{0.25cm}linkedin}}%
+        \kern 0.25 cm%
+        \AND%
+        \mbox{\hrefWithoutArrow{https://github.com/Hassu083}{{\textbar\ }\hspace*{0.25cm}github}}%
+        \kern 0.25 cm%
+        \AND%
+        \mbox{\hrefWithoutArrow{https://leetcode.com/Hassu083/}{{\textbar\ }\hspace*{0.25cm}leetcode}}%
+        \kern 0.25 cm%
+        \AND%
+        \mbox{\hrefWithoutArrow{https://medium.com/@hassu20083}{{\textbar\ }\hspace*{0.25cm}medium}}%
+
+    \end{header}
+
+    \vspace{0.3 cm - 0.3 cm}
+
+
+\section{Education}
+
+
+
+        
+        \begin{twocolentry}{
+            \textcolor{gray}{Karachi, Pakistan}
+            
+            \textcolor{gray}{Oct 2020 – Aug 2024}
+
+        }
+            \hrefWithoutArrow{https://www.neduet.edu.pk/}{{\textbf{NED University of Engineering and Technology}}}
+            
+            \textit{Bachelor of Computer Systems Engineering}
+            \begin{highlights}
+                \item Secured 6th position out of a competitive batch of 152 students
+                \item \textbf{CGPA:} 3.901/4.0 
+            \end{highlights}
+        \end{twocolentry}
+
+
+
+
+\section{Achievements}
+
+    \begin{onecolentry}
+        \begin{highlightsforbulletentries}
+
+
+        \item \mbox{\hrefWithoutArrow{https://www.linkedin.com/posts/hasnain83_metahackercup-coding-problemsolving-activity-7244229265284599809-LJ47}{{}\hspace*{0.0cm}Meta Hacker Cup Practice Round 2024:}} Secured \textbf{2nd} position nationally and \textbf{75th} internationally among 13,261 contestants
+\vspace{0.05 cm}
+        \item \mbox{\hrefWithoutArrow{https://docs.google.com/spreadsheets/d/135I_SeDDKZJnmPi2E6SoR0CEZ2AvE98eNxHHBgbNILE/edit?usp=sharing}{{}\hspace*{0.0cm}Participated in 20+ National & International Coding Competitions:}} Earned \textbf{Knight} badge on leetcode and reached to \textbf{4-star} level coder on geekforgeeks
+\vspace{0.05 cm}
+        \item \mbox{\hrefWithoutArrow{https://www.linkedin.com/posts/hasnain83_qualitymeasurementtest-activity-7154385789219450881-U7J7}{{}\hspace*{0.0cm}98th percentile in HEC Standardized Quality Measurement Test:}} Achieved \textbf{135th} rank out of 15,000 participants in a centralized IT test organized for 7th semester CS students in Pakistan in the year 2023
+\vspace{0.05 cm}
+        \item \mbox{\hrefWithoutArrow{https://drive.google.com/file/d/1nMpqCGNdsmsU1qYHnDvq9N1JLIqKX8Il/view?usp=sharing}{{}\hspace*{0.0cm}English proficiency test:}} Achieved a 7 band score in the IELTS exam
+\vspace{0.05 cm}
+        \item \mbox{\hrefWithoutArrow{https://clist.by/accounts/?sort_column=rating&sort_order=desc&country=PK&resource=102}{{}\hspace*{0.0cm}Leetcode:}} Ranked 3rd in Pakistan on LeetCode, with over 900 problems solved
+        \vspace{0.05 cm}
+        \item \mbox{\hrefWithoutArrow{https://lablab.ai/u/@Hassu083}{{}\hspace*{0.0cm}Participation in Hackathons:}} Participated in multiple International Hackathons with teammates accross the globe, @lablab.ai
+
+
+
+        \end{highlightsforbulletentries}
+    \end{onecolentry}
+
+
+
+    \section{Skills}
+
+
+
+        
+        \begin{onecolentry}
+            \textbf{Languages:} Python, Javascript, C++, Dart, SQL, Verilog, Latex
+        \end{onecolentry}
+
+        \vspace{0.2 cm}
+
+        \begin{onecolentry}
+            \textbf{Tools:} Git, Docker, Jupyter, VScode, Vivado
+        \end{onecolentry}
+        \vspace{0.2 cm}
+        \begin{onecolentry}
+            \textbf{Framework:} Flutter, FastApi, Reactjs
+        \end{onecolentry}
+
+        
+
+    
+    \section{Experience}
+
+
+
+        
+        \begin{twocolentry}{
+            \textcolor{gray}{Sydney, Australia}
+        
+        \textcolor{gray}{Aug 2023 – Oct 2024}
+        }
+            \mbox{\hrefWithoutArrow{https://drive.google.com/file/u/1/d/1MOei0zrmd6TW1YROkq9gscvFWOcFzlEF/view?usp=sharing}{{}\hspace*{0.0cm}\textbf{Auspro}}}%
+            
+            \textit{Associate Backend Engineer (Remote)}
+            \begin{highlights}
+                \item Designed and developed backend functionality and RESTful endpoints for applications using \textbf{FastAPI}
+                \item Integrated Large Language Model (LLM) Assistant APIs into the backend, focusing on prompt engineering and efficient data workflows
+                \item Worked with \textbf{PostgreSQL} to implement and manage a \textbf{vector database} for advanced data storage and retrieval
+                \item Built and optimized the backend infrastructure, ensuring scalability, security, and performance
+                \item Gained hands-on experience in effective communication, team collaboration, and professional work ethics while contributing to various projects
+            \end{highlights}
+        \end{twocolentry}
+
+
+
+\section{Hardware Projects}
+
+
+
+
+        \begin{onecolentry}
+            \mbox{\hrefWithoutArrow{https://github.com/Hassu083/RISC-v_SCDP_Verilog_implementation}{{}\hspace*{0.0cm}\textbf{RISC-V Single Cycle Datapath}}}
+
+            \textit{Implementation of a RISC-V processor with essential instruction support using Verilog}
+            \begin{highlights}
+
+                \item Designed and implemented the RISC-V Single-Cycle Datapath Processor (SCDP) using Verilog
+                \item Supported essential instructions including arithmetic, logical, memory access, and control operations
+                \item Simulated and validated the processor to ensure accurate execution of RISC-V assembly programs
+                \item Authored a series of \hrefWithoutArrow{https://docs.google.com/spreadsheets/d/1V-fCg6XG8Bi8ey7qi2Lblqp6wHPcu023ah60F7TII2g/edit?gid=0#gid=0&range=A4:B8}{articles} to increase literacy on the RISC-V instruction set and its implementation
+                \item \textbf{Technology:} Verilog, Vivado
+
+            \end{highlights}
+        \end{onecolentry}
+
+
+
+
+
+       \section{Projects}
+
+
+
+
+        \begin{onecolentry}
+            \mbox{\hrefWithoutArrow{https://drive.google.com/drive/folders/1blAiTGJN7H5FUzq-KA9xvVxdp7UoZjS_}{{}\hspace*{0.0cm}\textbf{Dialogify (Final Year Project)}}}
+
+            \textit{AI based solution for Cloud Orchestration \& Monitoring}
+            \begin{highlights}
+                \item Automates cloud deployments (AWS and GCP) through chatbot that streamlines the entire process from defining requirements for cloud instances to deployment and health monitoring, making it accessible for non-technical users
+                \item Managed the backend, including orchestrator functionality for GCP and AWS, chatbot integration, vector database management, endpoint logic, and deployment
+                \item \textbf{Technology:} FastAPI, AssistantAPI, Zilliz cloud, Next.js, Postgres, Cloud Run (GCP)
+
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.2 cm}
+
+
+        \begin{onecolentry}
+            \mbox{\hrefWithoutArrow{https://github.com/Hassu083/ML-ANN-CIFAR_10}{{}\hspace*{0.0cm}\textbf{ML-ANN}}}
+
+            \textit{Low level implementation of Artificial Neural Network}
+            \begin{highlights}
+                \item Incorporated optimization methods such as Gradient Descent, Adam, and RMSprops, along with regularization techniques like L2 and dropout
+                \item Trained model with CIFAR-10 dataset and saved them as a text file
+                \item \textbf{Technology:} Python, numpy
+
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.2 cm}
+
+        \begin{onecolentry}
+            \mbox{\hrefWithoutArrow{https://github.com/Hassu083/governing-ai}{{}\hspace*{0.0cm}\textbf{GoverningAI}}}
+
+
+            \textit{User-friendly dashboard that empowers healthcare SMBs to confidently adopt AI}
+            \begin{highlights}
+                \item Worked along with five colleagues from USA and Pakistan on the project
+                \item Handled backend, integrate the GPT-4o model and create a tool to get privacy policy of vendor
+                \item \textbf{Technology:} React, Open AI Model GPT-4o, Python, Fastapi, SQLite
+
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.2 cm}
+
+
+        \begin{onecolentry}
+            \mbox{\hrefWithoutArrow{https://github.com/Hassu083/MAROID}{{}\hspace*{0.0cm}\textbf{MAroid}}}
+
+            \textit{MIPS Instruction Set Architecture Simulator}
+            \begin{highlights}
+                \item Developed a simulator supporting MIPS (Microprocessor without Interlocked Pipelined Stages) instruction set architecture
+                \item Executed assembly code, including instructions: add, sub, slt, addi, slti, lw, sw, beq, bne, and j
+                \item Created a user interface to visualize the Register File and Data Memory
+                \item \textbf{Technology:} Flutter
+
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.2 cm}
+
+        \begin{onecolentry}
+            \mbox{\hrefWithoutArrow{https://github.com/Hassu083/social-hub}{{}\hspace*{0.0cm}\textbf{SocialHub}}}
+
+            \textit{A social media app}
+            \begin{highlights}
+                
+                \item Implemented features include posting (text, images, and hybrid content), commenting, reactions, messaging, user profiles, saved posts, app rating, post sharing, following/unfollowing, and notifications
+                \item \textbf{Technology:} Flutter, Php, MySQL
+
+            \end{highlights}
+        \end{onecolentry}
+
+
+
+
+
+\section{Volunteer and Teaching Experience}
+
+
+
+
+
+        \begin{onecolentry}
+            \mbox{\hrefWithoutArrow{https://qubitcoders.streamlit.app/}{{}\hspace*{0.0cm}\textbf{QubtiCoders}}}
+
+            \begin{highlights}
+                \item Co-founded the Competitive Programming Community of 100+ members at NED UET to raise awareness and promote engagement in competitive programming
+
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.2 cm}
+
+
+        \begin{onecolentry}
+            \mbox{\hrefWithoutArrow{https://docs.google.com/document/d/1sF-HejQDtcqmjfA-DJ9-VZ0k2LDh3oU7mmNlSnPM_fA/edit?tab=t.0}{{}\hspace*{0.0cm}\textbf{ECAT Teacher}}}
+
+            \begin{highlights}
+                \item Helped 5 students to prepare for the Engineering College Admission Test (ECAT) with curated materials and free classes
+
+            \end{highlights}
+        \end{onecolentry}
+
+    
+\section{Certificates}
+
+
+
+
+
+        \begin{onecolentry}
+            \mbox{\hrefWithoutArrow{https://www.linkedin.com/posts/hasnain83_certificate-activity-7052713168367722497-YnyN?utm_source=share}{{}\hspace*{0.0cm}\textbf{Data scientist with python by Datacamp}}}
+
+            \begin{highlights}
+                \item Gained hands-on experience with key data science tools and libraries including Pandas, NumPy, Matplotlib, Scikit-learn, and Seaborn
+                \item Developed proficiency in data wrangling, exploratory data analysis (EDA), and data visualization techniques
+
+            \end{highlights}
+        \end{onecolentry}
+
+
+        \vspace{0.2 cm}
+
+
+        \begin{onecolentry}
+            \mbox{\hrefWithoutArrow{https://coursera.org/share/6a7e5334b21b08070fec05a723ddae69}{{}\hspace*{0.0cm}\textbf{Neural Networks and Deep Learning by DeepLearning.AI}}}
+
+            \begin{highlights}
+                \item Gained a deeper understanding of the calculus and logic behind NNs
+                \item Explored techniques like hyperparameter tuning \& regularization for model improvement
+
+            \end{highlights}
+        \end{onecolentry}
+
+    
+    
+
+    
+
+\end{document}
